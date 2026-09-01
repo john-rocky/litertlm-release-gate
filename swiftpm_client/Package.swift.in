@@ -1,0 +1,19 @@
+// swift-tools-version: 5.9
+// Materialized by swiftpm_check.sh into cache/swiftpm_work/ with the version
+// from pins.env — @LITERTLM_VERSION@ / @LITERTLM_DEP@ are substituted there.
+// Testing the OFFICIAL package resolution path a user would take, not a fork.
+import PackageDescription
+
+let package = Package(
+  name: "relgate-swiftpm-client",
+  platforms: [.macOS(.v12)],
+  dependencies: [
+    .package(url: "https://github.com/google-ai-edge/LiteRT-LM.git", @LITERTLM_DEP@)
+  ],
+  targets: [
+    .executableTarget(
+      name: "relgate",
+      dependencies: [.product(name: "LiteRTLM", package: "LiteRT-LM")]
+    )
+  ]
+)

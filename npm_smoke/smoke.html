@@ -1,0 +1,44 @@
+<!doctype html>
+<!-- litert.js canary: load the packed @litertjs/core, run one real inference on
+     canary.tflite (wasm accelerator), report finite outputs as RESULT:{json}.
+     Served by npm_check.sh next to ./litertjs/ (unpacked package) + canary.tflite;
+     read back via headless Chrome --dump-dom. -->
+<meta charset="utf-8">
+<title>litert.js release-gate smoke</title>
+<!-- The packages are published for bundlers (bare `@litertjs/wasm-utils` import
+     inside dist/index.js); this import map is the harness's stand-in for one. -->
+<script type="importmap">
+{"imports": {"@litertjs/wasm-utils": "./wasm-utils/dist/index.js"}}
+</script>
+<pre id="out">PENDING</pre>
+<script type="module">
+const out = (o) => { document.getElementById('out').textContent = 'RESULT:' + JSON.stringify(o); };
+try {
+  const {loadLiteRt, loadAndCompile, Tensor} = await import('./litertjs/dist/index.js');
+  await loadLiteRt('./litertjs/wasm/');
+  const model = await loadAndCompile('./canary.tflite', {accelerator: 'wasm'});
+  const det = model.getInputDetails().map(d => ({name: d.name, dtype: d.dtype, shape: Array.from(d.shape)}));
+  const inputs = det.map(d => {
+    const dims = d.shape.map(s => Math.max(1, s));
+    const n = dims.reduce((a, b) => a * b, 1);
+    // integer inputs get ONES (an all-zero attention mask attends to nothing
+    // and NaNs a perfectly fine model)
+    const arr = d.dtype.startsWith('int') ? new Int32Array(n).fill(1)
+                                          : new Float32Array(n).fill(0.5);
+    return new Tensor(arr, dims);
+  });
+  const t0 = performance.now();
+  const res = await model.run(inputs);
+  const ms = Math.round(performance.now() - t0);
+  const outs = (Array.isArray(res) ? res : Object.values(res)).map(t => {
+    const a = t.toTypedArray();
+    let finite = true;
+    for (let i = 0; i < a.length; i++) if (!Number.isFinite(a[i])) { finite = false; break; }
+    return {len: a.length, finite};
+  });
+  out({ok: outs.length > 0 && outs.every(o => o.finite && o.len > 0),
+       accelerator: 'wasm', infer_ms: ms, inputs: det, outputs: outs});
+} catch (e) {
+  out({ok: false, error: String((e && e.stack) || e).slice(0, 500)});
+}
+</script>

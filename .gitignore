@@ -1,0 +1,9 @@
+results_*/
+cache/
+maven_android/.gradle/
+maven_android/build/
+maven_android/app/build/
+maven_android/local.properties
+swiftpm_client/.build/
+swiftpm_client/Package.resolved
+__pycache__/
