@@ -2,7 +2,7 @@
 
 Per-channel install-and-run checks over a [LiteRT-LM](https://github.com/google-ai-edge/LiteRT-LM) release: for npm, Maven (Android), the GitHub release assets, SwiftPM (macOS), and the README quickstart, each runner answers one question — **does what a user gets today actually install and generate?** Content checks, not existence checks: tarballs are unpacked, zips are diffed against their declared checksums, models really decode.
 
-I ship [conversions on top of LiteRT-LM](https://huggingface.co/litert-community); this gate exists because litert-lm 0.15.0 silently invalidated bundles I had already shipped, and I found out from a user rather than from a check. It now runs on every release. First full pass (v0.16.1 generation): [results/v0.16.1-generation.md](results/v0.16.1-generation.md) — 35 checks, every FAIL mapped to a filed issue.
+I ship [conversions on top of LiteRT-LM](https://huggingface.co/litert-community); this gate exists because litert-lm 0.15.0 silently invalidated bundles I had already shipped, and I found out from a user rather than from a check. It now runs on every release. First full pass (v0.16.1 generation): [results/v0.16.1-generation.md](results/v0.16.1-generation.md) — 35 checks, every FAIL mapped to a filed issue. Second pass (0.17.0 generation, 2026-09-06): [results/v0.17.0-generation.md](results/v0.17.0-generation.md) — PyPI/Maven/npm at 0.17.0 while the GitHub tag stayed v0.16.1; npm `@litert-lm/core` back to a full package (#3364 FAIL→PASS), the Android AAR now needs a Kotlin 2.4 consumer, no regressions.
 
 ## Run it
 

@@ -32,6 +32,8 @@ def main():
     ap.add_argument("--results", help="results dir (default channels/results_<today>)")
     ap.add_argument("--report", help="output md (default reports/release_artifact_gate_<date>.md)")
     ap.add_argument("--no-copy", action="store_true", help="skip the _data/ evidence copy")
+    ap.add_argument("--gen-label", help="generation label for the title (default: GEN_LITERTLM_TAG); "
+                                        "use it when the channels disagree, e.g. '0.17.0 (PyPI/Maven/npm) + v0.16.1 (GitHub)'")
     ap.add_argument("--round", type=int, default=0,
                     help="run number for the title (0 = the 2026-08-31 v0.16.1 run)")
     args = ap.parse_args()
@@ -40,7 +42,7 @@ def main():
     date = time.strftime("%Y%m%d")
     rdir = args.results or os.path.join(here, f"results_{date}")
     pins = load_pins()
-    gen = pins["GEN_LITERTLM_TAG"]
+    gen = args.gen_label or pins["GEN_LITERTLM_TAG"]
 
     rows = {}
     for p in glob.glob(os.path.join(rdir, "*.json")):
