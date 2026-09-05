@@ -32,6 +32,8 @@ def main():
     ap.add_argument("--results", help="results dir (default channels/results_<today>)")
     ap.add_argument("--report", help="output md (default reports/release_artifact_gate_<date>.md)")
     ap.add_argument("--no-copy", action="store_true", help="skip the _data/ evidence copy")
+    ap.add_argument("--round", type=int, default=0,
+                    help="run number for the title (0 = the 2026-08-31 v0.16.1 run)")
     args = ap.parse_args()
 
     here = os.path.dirname(os.path.abspath(__file__))
@@ -53,7 +55,7 @@ def main():
     os.makedirs(os.path.dirname(report), exist_ok=True)
     total = fails = news = 0
     lines = []
-    lines.append(f"# リリース成果物ゲート 第0回 — {gen} 世代 ({time.strftime('%Y-%m-%d')})\n")
+    lines.append(f"# リリース成果物ゲート 第{args.round}回 — {gen} 世代 ({time.strftime('%Y-%m-%d')})\n")
     lines.append("公開された配布物がチャネルごとに「実際にインストールできて動くか」の実測表。ハーネスは `./`(各行 re-run 可能、ピンは `pins.env`)。性能ベンチとは別軸 = 配布物の完全性。\n")
     lines.append(f"世代ピン: LiteRT-LM `{gen}` / LiteRT `{pins['GEN_LITERT_TAG']}` / PyPI `{pins['GEN_PYPI_LITERT_LM']}` / Maven `{pins['GEN_MAVEN_LITERTLM_ANDROID']}` / npm `@litert-lm/core {pins['GEN_NPM_LITERTLM_CORE']}` `@litertjs/core {pins['GEN_NPM_LITERTJS_CORE']}`。LLM canary: `{pins['CANARY_LLM_REPO']}/{pins['CANARY_LLM_FILE']}`。\n")
     lines.append("| チャネル | 検査 | 結果 | 実測 | 該当 issue |")

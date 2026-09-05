@@ -143,6 +143,15 @@ if not (has_runtime and has_wasm):
         "web LLM smoke of @litert-lm/core",
         "SKIP", "blocked: package has no runtime files to load (see contents FAIL)",
         issue="LiteRT-LM#3364"))
+else:
+    # 0.17.0 (2026-09-06) ships dist/ + wasm/: keep the row visible as a SKIP, or the
+    # check silently vanishes from the table. A headless LLM smoke is not implemented.
+    checks.append(check(
+        "npm.litert-lm-core.browser-smoke",
+        "web LLM smoke of @litert-lm/core",
+        "SKIP", f"not implemented: package now ships dist/ + wasm/ ({lm_ver}); a headless LLM "
+                "smoke needs a web-sized canary bundle (todo)",
+        issue=""))
 
 write_result("npm", checks, out or None,
              extra={"npm_latest": {"@litert-lm/core": lm_ver, "@litertjs/core": js_ver}})
