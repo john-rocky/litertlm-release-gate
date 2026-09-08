@@ -4,6 +4,8 @@ Per-channel install-and-run checks over a [LiteRT-LM](https://github.com/google-
 
 I ship [conversions on top of LiteRT-LM](https://huggingface.co/litert-community); this gate exists because litert-lm 0.15.0 silently invalidated bundles I had already shipped, and I found out from a user rather than from a check. It now runs on every release. First full pass (v0.16.1 generation): [results/v0.16.1-generation.md](results/v0.16.1-generation.md) — 35 checks, every FAIL mapped to a filed issue. Second pass (0.17.0 generation, 2026-09-06): [results/v0.17.0-generation.md](results/v0.17.0-generation.md) — PyPI/Maven/npm at 0.17.0 while the GitHub tag stayed v0.16.1; npm `@litert-lm/core` back to a full package (#3364 FAIL→PASS), the #3334 end-of-turn crash gone on a Pixel 8a with the 0.17.0 AAR (FAIL→PASS), the AAR now needs a Kotlin 2.4 consumer, no regressions.
 
+**Did a channel fail for you?** [Open a channel report](https://github.com/john-rocky/litertlm-release-gate/issues/new?template=channel-report.yml) with the command and the output. The row is re-run and a confirmed failure is filed upstream, with the issue number linked back.
+
 ## Run it
 
 ```bash

@@ -1,0 +1,51 @@
+name: "Report a channel that failed, or ask for a check"
+description: "A LiteRT-LM install or run that did not work for you from npm, Maven, PyPI, SwiftPM, the GitHub assets or the README. Paste the command and the output."
+title: "[channel] "
+labels: ["channel report"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        This repository re-runs each distribution channel on every LiteRT-LM release and files
+        what fails upstream. If a channel failed for you, or you use a channel or an OS the table
+        does not cover, say so here. The row is re-run against the pinned generation, the result
+        lands in `results/`, and a confirmed failure is filed on the upstream tracker with the
+        issue number linked back here. Bugs in the runtime itself belong on
+        https://github.com/google-ai-edge/LiteRT-LM/issues; this repository measures whether the
+        published artifacts install and generate.
+  - type: dropdown
+    id: channel
+    attributes:
+      label: Channel
+      options:
+        - npm (@litert-lm/core, @litertjs/core)
+        - Maven (litertlm-android)
+        - PyPI (litert-lm CLI)
+        - SwiftPM (LiteRT-LM package)
+        - GitHub release assets (xcframework, C API zips, litert_lm_main)
+        - README quickstart
+        - Other / not sure
+    validations:
+      required: true
+  - type: textarea
+    id: what
+    attributes:
+      label: What you ran and what came back
+      description: The exact command (or dependency line) and the output or error, verbatim. For a check request, describe what should be verified and why.
+      render: shell
+    validations:
+      required: true
+  - type: input
+    id: version
+    attributes:
+      label: Version you got (optional)
+      placeholder: "litert-lm 0.17.0 / litertlm-android 0.17.0 / tag v0.16.1"
+    validations:
+      required: false
+  - type: input
+    id: host
+    attributes:
+      label: OS and device (optional)
+      placeholder: "macOS 26.0, M2 / Ubuntu 24.04 / Pixel 8a, Android 16"
+    validations:
+      required: false

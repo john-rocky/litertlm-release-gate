@@ -1,0 +1,11 @@
+blank_issues_enabled: true
+contact_links:
+  - name: Results tables
+    url: https://github.com/john-rocky/litertlm-release-gate/tree/main/results
+    about: Every check of each generation with its verdict and the upstream issue it maps to. Your failure may already be a row.
+  - name: LiteRT-LM issues (the runtime)
+    url: https://github.com/google-ai-edge/LiteRT-LM/issues
+    about: Bugs in the runtime itself go there; this repository measures the distribution channels.
+  - name: Convert a model (hf-to-litertlm)
+    url: https://github.com/john-rocky/hf-to-litertlm/issues/new?template=model-request.yml
+    about: Requests for a model in .litertlm form go there.
