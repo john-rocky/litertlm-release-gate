@@ -113,12 +113,34 @@ def tail(name, n=4):
     except Exception:
         return "(no log)"
 
+# The recurring SwiftPM failure shape (#2920 at v0.14.0, #3296 on main since
+# 2026-08-13, the v0.17.0 TAG on 2026-09-09): swift/ calls litert_lm_* C API that
+# the xcframework Package.swift pins does not declare, because the pins point at
+# an older release's zips. Name the missing symbols and map to the known issue —
+# the fix is a Package.swift pin bump, not a toolchain problem (proof: the same
+# toolchain builds once the two pins are moved to the tag's own zips).
+import re
+try:
+    build_text = open(os.path.join(work, "build.log"), errors="replace").read()
+except Exception:
+    build_text = ""
+missing = sorted(set(re.findall(
+    r"cannot find '(litert_lm_[A-Za-z0-9_]+|kLiteRtLm[A-Za-z0-9_]+)' in scope", build_text)))
+if build_rc == "0":
+    b_meas, b_issue = "built", ""
+elif missing:
+    b_meas = (f"{len(missing)} C symbol(s) the pinned xcframework headers lack "
+              f"({', '.join(missing[:3])}, …): swift/ at {tag} is ahead of the binaries "
+              f"Package.swift pins")
+    b_issue = "LiteRT-LM#3296 (Swift wrapper ahead of the pinned xcframeworks; pattern of #2920)"
+else:
+    b_meas, b_issue = tail("build.log"), ""
 checks.append(check(
     "swiftpm.build",
     "swift build -c release of a minimal Engine client (pulls pinned xcframeworks)",
     "PASS" if build_rc == "0" else "FAIL",
-    ("built" if build_rc == "0" else tail("build.log"))[:200],
-    issue="",
+    b_meas[:220],
+    issue=b_issue,
     evidence=f"{work}/build.log"))
 
 if run_rc == "2" and build_rc != "0":

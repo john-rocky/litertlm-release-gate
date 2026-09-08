@@ -143,7 +143,7 @@ def resolve_canary(repo, filename, local_rel=None):
             return p, "local"
     p = hf_cached(repo, filename)
     if p:
-        return p, "hf-cache"
+        return _named_like(p, repo, filename), "hf-cache"
     url = f"https://huggingface.co/{repo}/resolve/main/{filename}"
     dest = os.path.join(CACHE, "canary", repo.replace("/", "__"), filename)
     meta = fetch_json(f"https://huggingface.co/api/models/{repo}?blobs=true",
@@ -151,3 +151,23 @@ def resolve_canary(repo, filename, local_rel=None):
     size = next((s.get("size") for s in meta.get("siblings", [])
                  if s["rfilename"] == filename), None)
     return download(url, dest, expected_size=size, token=hf_token()), "downloaded"
+
+
+def _named_like(path, repo, filename):
+    """Hand the engine a path that carries the model's real file name.
+
+    hf_cached() returns the hub's content-addressed blob (no extension). Up to
+    v0.16.0 the engine accepted that; 0.17.0 decides the file format from the
+    extension and fails an extension-less path with INVALID_ARGUMENT
+    "Unsupported or unknown file format" (file_format_util.cc:106, measured
+    2026-09-09 on the v0.17.0 mac xcframework — the same bytes generated fine
+    once reached through a .litertlm-named symlink). A harness-side FAIL that
+    would read as a channel FAIL, so link the blob under its own name."""
+    if os.path.basename(path) == filename:
+        return path
+    link = os.path.join(CACHE, "canary", repo.replace("/", "__"), filename)
+    os.makedirs(os.path.dirname(link), exist_ok=True)
+    if os.path.islink(link) or os.path.exists(link):
+        os.remove(link)
+    os.symlink(path, link)
+    return link
