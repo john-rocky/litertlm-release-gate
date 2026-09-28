@@ -4,6 +4,7 @@
 #   ./run_channels.sh                 # all rows + table
 #   ./run_channels.sh --no-device     # skip the phone leg
 #   ./run_channels.sh --only npm,swiftpm
+#   ./run_channels.sh --only scoring      # the text-scoring canary alone (Mac CPU, no phone)
 #
 # Rows run sequentially (each is network-heavy; parallel runs contend on the
 # shared line and on the shared phone). A row failing does NOT stop the rest —
@@ -13,12 +14,12 @@
 # doctrine: a runner that has not been run today is assumed broken (README).
 set -uo pipefail
 HERE="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
-NODEV=""; ONLY="npm,maven,gh_assets,swiftpm,quickstart"
+NODEV=""; ONLY="npm,maven,gh_assets,swiftpm,quickstart,scoring"
 while [ $# -gt 0 ]; do
   case "$1" in
     --no-device) NODEV="--no-device"; shift ;;
     --only) ONLY="$2"; shift 2 ;;
-    *) echo "usage: $0 [--no-device] [--only npm,maven,gh_assets,swiftpm,quickstart]"; exit 2 ;;
+    *) echo "usage: $0 [--no-device] [--only npm,maven,gh_assets,swiftpm,quickstart,scoring]"; exit 2 ;;
   esac
 done
 OUTDIR="$HERE/results_$(date +%Y%m%d)"
@@ -33,6 +34,7 @@ has npm        && { echo "===== npm";        "$HERE/npm_check.sh" --out "$OUTDIR
 has swiftpm    && { echo "===== swiftpm";    "$HERE/swiftpm_check.sh" --out "$OUTDIR" || RC=1; }
 has quickstart && { echo "===== quickstart"; "$HERE/quickstart_check.sh" --out "$OUTDIR" || RC=1; }
 has maven      && { echo "===== maven";      "$HERE/maven_check.sh" --out "$OUTDIR" $NODEV || RC=1; }
+has scoring    && { echo "===== scoring";    python3 "$HERE/scoring_rewind_check.py" --out "$OUTDIR" || RC=1; }
 echo "===== table"
 python3 "$HERE/make_table.py" --results "$OUTDIR" || RC=1
 echo
