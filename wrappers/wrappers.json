@@ -1,0 +1,275 @@
+{
+  "upstream": {
+    "github": "google-ai-edge/LiteRT-LM",
+    "maven_metadata": "https://dl.google.com/dl/android/maven2/com/google/ai/edge/litertlm/litertlm-android/maven-metadata.xml",
+    "maven_coordinate": "com.google.ai.edge.litertlm:litertlm-android",
+    "npm": "@litert-lm/core",
+    "xcframework_asset": "CLiteRTLM.xcframework.zip"
+  },
+  "wrappers": [
+    {
+      "repo": "Cap-go/capacitor-llm",
+      "ecosystem": "Capacitor",
+      "package": {"registry": "npm", "name": "@capgo/capacitor-llm"},
+      "pins": [
+        {"platform": "Android", "channel": "maven", "path": "android/build.gradle", "regex": "litertlm-android:(?P<v>[0-9][^'\"\\s)]*)"},
+        {"platform": "iOS", "channel": "xcframework", "path": "Package.swift", "regex": "releases/download/(?P<v>v[0-9][^/]*)/CLiteRTLM\\.xcframework\\.zip"}
+      ]
+    },
+    {
+      "repo": "JetBrains/koog",
+      "ecosystem": "Kotlin Multiplatform",
+      "pins": [
+        {"platform": "Android", "channel": "maven", "path": "gradle/libs.versions.toml", "regex": "^\\s*litertlm\\s*=\\s*\"(?P<v>[^\"]+)\""}
+      ]
+    },
+    {
+      "repo": "helenkwok/expo-litert-lm",
+      "ecosystem": "Expo",
+      "package": {"registry": "npm", "name": "expo-litert-lm"},
+      "pins": [
+        {"platform": "Android", "channel": "maven", "path": "android/build.gradle", "regex": "litertlm-android:(?P<v>[0-9][^'\"\\s)]*)"},
+        {"platform": "iOS", "channel": "github", "path": "ios/BinaryPods/Frameworks/rewrap-manifest.json", "regex": "\"upstream_version\":\\s*\"(?P<v>v[0-9][^\"]*)\""}
+      ],
+      "note": "iOS: CLiteRTLM.xcframework from helenkwok/LiteRTLM-Swift release v0.10.2+rewrap.5, which re-packages the xcframework vendored in mylovelycodes/LiteRTLM-Swift (identical __text section and Headers/engine.h; the GemmaModelConstraintProvider load path is rewritten and the binary re-signed); the version is the upstream_version field of the rewrap manifest.",
+      "links": [["rewrap release", "https://github.com/helenkwok/LiteRTLM-Swift/releases/tag/v0.10.2%2Brewrap.5"]]
+    },
+    {
+      "repo": "NightMean/OlliteRT",
+      "ecosystem": "App (Android)",
+      "kind": "app",
+      "pins": [
+        {"platform": "Android", "channel": "maven", "path": "Android/src/gradle/libs.versions.toml", "regex": "^\\s*litertlm\\s*=\\s*\"(?P<v>[^\"]+)\""}
+      ]
+    },
+    {
+      "repo": "timmyy123/LLM-Hub",
+      "ecosystem": "App (Android, iOS)",
+      "kind": "app",
+      "pins": [
+        {"platform": "Android", "channel": "maven", "path": "android/app/build.gradle.kts", "regex": "litertlm-android:(?P<v>[0-9][^'\"\\s)]*)"},
+        {"platform": "iOS", "channel": "xcframework", "path": "ios/LLMHub/LocalPackages/LiteRT-LM/Package.swift", "regex": "releases/download/(?P<v>v[0-9][^/]*)/CLiteRTLM\\.xcframework\\.zip"}
+      ]
+    },
+    {
+      "repo": "hung-yueh/react-native-litert-lm",
+      "ecosystem": "React Native",
+      "package": {"registry": "npm", "name": "react-native-litert-lm"},
+      "pins": [
+        {"platform": "Android", "channel": "maven", "path": "package.json", "regex": "\"androidMavenVersion\":\\s*\"(?P<v>[^\"]+)\""},
+        {"platform": "iOS", "channel": "xcframework", "path": "package.json", "regex": "\"iosGitTag\":\\s*\"(?P<v>[^\"]+)\""}
+      ]
+    },
+    {
+      "repo": "DenisovAV/flutter_edge_ai",
+      "name": "flutter_gemma (final release)",
+      "url": "https://github.com/DenisovAV/flutter_edge_ai/tree/legacy-final/legacy/flutter_gemma_litertlm",
+      "ref": "legacy-final",
+      "ecosystem": "Flutter / Dart",
+      "package": {"registry": "pub", "name": "flutter_gemma_litertlm"},
+      "pins": [
+        {"platform": "native", "channel": "github", "path": "legacy/flutter_gemma_litertlm/hook/build.dart", "after": "_litertlmBundle\\s*=\\s*_NativeBundle\\(", "regex": "version:\\s*'(?P<v>[0-9]+\\.[0-9]+\\.[0-9]+)"}
+      ],
+      "note": "pub.dev flutter_gemma 1.11.4 and flutter_gemma_litertlm 1.8.6 are the final releases under these names (\"Moved to flutter_edge_ai\"); native bundle native-v0.17.1-a."
+    },
+    {
+      "repo": "DenisovAV/flutter_edge_ai",
+      "ecosystem": "Flutter / Dart",
+      "package": {"registry": "pub", "name": "flutter_edge_ai_litertlm"},
+      "pins": [
+        {"platform": "native", "channel": "github", "path": "packages/flutter_edge_ai_litertlm/hook/build.dart", "after": "_litertlmBundle\\s*=\\s*_NativeBundle\\(", "regex": "version:\\s*'(?P<v>[0-9]+\\.[0-9]+\\.[0-9]+)"},
+        {"platform": "Web", "channel": "npm", "path": "packages/flutter_edge_ai/example/web/index.html", "regex": "npm/@litert-lm/core@(?P<v>[0-9][^/'\"]*)/\\+esm"}
+      ],
+      "note": "Native libraries built in this repo from LiteRT-LM source (release native-v0.19.0-a). Web: the @litert-lm/core import in the example app's web/index.html."
+    },
+    {
+      "repo": "leehack/llamadart",
+      "ecosystem": "Flutter / Dart",
+      "package": {"registry": "pub", "name": "llamadart"},
+      "pins": [
+        {"platform": "native", "channel": "github", "path": "lib/src/backends/litert_lm/litert_lm_runtime.dart", "regex": "_litertLmReleaseTag\\s*=\\s*'(?P<v>v[0-9]+\\.[0-9]+\\.[0-9]+)"},
+        {"platform": "Web", "channel": "npm", "path": "example/chat_app/web/index.html", "regex": "npm/@litert-lm/core@(?P<v>[0-9][^/'\"]*)/\\+esm"}
+      ],
+      "note": "Runtime from leehack/litert-lm-native release v0.19.1-2. Web: the default @litert-lm/core module URL in the example chat app's web/index.html; apps set their own URL or preload the package."
+    },
+    {
+      "repo": "albertoroda/react-native-ai-core",
+      "ecosystem": "React Native",
+      "package": {"registry": "npm", "name": "react-native-ai-core"},
+      "pins": [
+        {"platform": "Android", "channel": "maven", "path": "android/build.gradle", "regex": "litertlm-android:(?P<v>[0-9][^'\"\\s)]*)"}
+      ]
+    },
+    {
+      "repo": "saidkaban/expo-ai-kit",
+      "ecosystem": "Expo",
+      "package": {"registry": "npm", "name": "expo-ai-kit"},
+      "pins": [
+        {"platform": "Android", "channel": "maven", "path": "android/build.gradle", "regex": "litertlm-android:(?P<v>[0-9][^'\"\\s)]*)"},
+        {"platform": "iOS", "channel": "xcframework", "path": "scripts/install-litertlm.sh", "regex": "LITERTLM_VERSION=\"(?P<v>v[^\"]+)\""}
+      ]
+    },
+    {
+      "repo": "OrihuelaConde/LiteRtLmSharp",
+      "ecosystem": ".NET",
+      "package": {"registry": "nuget", "name": "LiteRtLmSharp"},
+      "pins": [
+        {"platform": "C API", "channel": "github", "path": "Directory.Build.props", "regex": "<LiteRtLmVersion>(?P<v>v[^<]+)</LiteRtLmVersion>"}
+      ]
+    },
+    {
+      "repo": "Uralstech/UAI.LiteRTLM",
+      "ecosystem": "Unity",
+      "package": {"registry": "nuget", "name": "Uralstech.UAI.LiteRTLM"},
+      "pins": [
+        {"platform": "source", "channel": "github", "submodule": "Native/LiteRT-LM"}
+      ],
+      "note": "Native libraries built from the submodule (Native/build.sh)."
+    },
+    {
+      "repo": "Leuconoe/LiteRT-LM-Unity",
+      "ecosystem": "Unity",
+      "pins": [
+        {"platform": "source", "channel": "github", "submodule": "External/LiteRT-LM"}
+      ],
+      "notes_in_repo": [
+        {"path": "README.md", "regex": "^## Upgrading LiteRT-LM: what broke at v0\\.17\\.1", "label": "README: what broke at v0.17.1 (2026-09-17, reverted)"}
+      ],
+      "note": "Submodule at 80f301f, the parent of the commit tagged v0.14.0 upstream (the tag commit changes two checksum lines in Package.swift); version.bzl there reads 0.14.0."
+    },
+    {
+      "repo": "vladimirvivien/litertlm-go",
+      "ecosystem": "Go",
+      "pins": [
+        {"platform": "C API", "channel": "github", "path": "pkg/libfetch/libfetch.go", "regex": "DefaultVersion\\s*=\\s*\"(?P<v>v[^\"]+)\""}
+      ],
+      "note": "v0.16.0 is the release FetchLib downloads when the caller passes no version; callers can pass another. README: \"Minimum supported upstream C-API runtime: LiteRT-LM v0.16.0.\""
+    },
+    {
+      "repo": "maceip/litert-lm-rs",
+      "ecosystem": "Rust",
+      "package": {"registry": "crates", "name": "litert-lm-rs"},
+      "pins": [
+        {"platform": "C API", "channel": "none", "path": "c/engine.h", "text": "none (links a LiteRT-LM library the user builds)"}
+      ],
+      "note": "The bundled c/engine.h equals upstream c/engine.h at 5be8b14 (2025-10-04), before v0.8.0.",
+      "links": [["5be8b14", "https://github.com/google-ai-edge/LiteRT-LM/blob/5be8b14428/c/engine.h"]]
+    },
+    {
+      "repo": "jegly/Box",
+      "ecosystem": "App (Android)",
+      "kind": "app",
+      "pins": [
+        {"platform": "Android", "channel": "maven", "path": "Android/src/gradle/libs.versions.toml", "regex": "^\\s*litertlm\\s*=\\s*\"(?P<v>[^\"]+)\""}
+      ]
+    },
+    {
+      "repo": "agents-io/PokeClaw",
+      "ecosystem": "App (Android)",
+      "kind": "app",
+      "pins": [
+        {"platform": "Android", "channel": "maven", "path": "app/build.gradle.kts", "regex": "litertlm-android:(?P<v>[0-9][^'\"\\s)]*)"}
+      ]
+    },
+    {
+      "repo": "mylovelycodes/LiteRTLM-Swift",
+      "ecosystem": "Swift",
+      "pins": [
+        {"platform": "iOS", "channel": "unverified", "path": "Package.swift", "regex": "path:\\s*\"Frameworks/LiteRTLM\\.xcframework\"", "text": "unverified (vendored xcframework; the repo does not state its LiteRT-LM version)"}
+      ],
+      "note": "The bundled Headers/engine.h equals upstream c/engine.h at the v0.10.2 tag.",
+      "links": [["v0.10.2 c/engine.h", "https://github.com/google-ai-edge/LiteRT-LM/blob/v0.10.2/c/engine.h"]]
+    },
+    {
+      "repo": "offbit-ai/LiteRT",
+      "ecosystem": "Rust",
+      "package": {"registry": "crates", "name": "litertlm"},
+      "pins": [
+        {"platform": "native", "channel": "github", "path": "litert-lm-sys/build.rs", "regex": "LITERT_LM_VERSION:\\s*&str\\s*=\\s*\"(?P<v>[0-9][^\"]*)\""}
+      ],
+      "note": "Prebuilt libraries from the offbit-ai/LiteRT release litert-lm-v0.10.2 (MIRROR_BASE in the same file)."
+    },
+    {
+      "repo": "winyunq/LiteRT-LM-Unreal",
+      "ecosystem": "Unreal",
+      "pins": [
+        {"platform": "Win64", "channel": "unverified", "path": "Source/LiteRTLMUnreal/LiteRTLMUnreal.Build.cs", "regex": "Source/ThirdParty/LiteRtLm/Binaries", "text": "unverified (vendored Win64 binaries on master; no LiteRT-LM version stated for them)"}
+      ],
+      "note": "README: master holds \"the legacy public baseline\"; the current build is described as using \"the official LiteRT-LM v0.14 C API\", with a Win64 runtime in winyunq/LiteRT-LM release unreal-win64-v0.14.0-abi1.2 (2026-07-17). The binaries on master were last changed 2026-06-03.",
+      "links": [["README", "https://github.com/winyunq/LiteRT-LM-Unreal/blob/d8601f6b63b75bbb54e7e4f5eb6cbc280e22bb2b/README.md#L7"], ["release", "https://github.com/winyunq/LiteRT-LM/releases/tag/unreal-win64-v0.14.0-abi1.2"]]
+    },
+    {
+      "repo": "sagar-develop/litertlm-kmp",
+      "ecosystem": "Kotlin Multiplatform",
+      "pins": [
+        {"platform": "Android", "channel": "maven", "path": "gradle/libs.versions.toml", "regex": "^\\s*litertlm\\s*=\\s*\"(?P<v>[^\"]+)\""}
+      ]
+    },
+    {
+      "repo": "Luxshan2000/LiteRTLM-Swift-SDK",
+      "ecosystem": "Swift",
+      "pins": [
+        {"platform": "iOS", "channel": "unverified", "path": "Package.swift", "regex": "path:\\s*\"Frameworks/LiteRTLM\\.xcframework\"", "text": "unverified (vendored xcframework; the repo does not state its LiteRT-LM version)"}
+      ],
+      "note": "The bundled Headers/engine.h equals upstream c/engine.h at the v0.10.2 tag.",
+      "links": [["v0.10.2 c/engine.h", "https://github.com/google-ai-edge/LiteRT-LM/blob/v0.10.2/c/engine.h"]]
+    },
+    {
+      "repo": "ArcBlock/lite-rt-lm-ios",
+      "ecosystem": "Swift",
+      "pins": [
+        {"platform": "iOS", "channel": "xcframework", "path": "Package.swift", "regex": "releases/download/(?P<v>v[0-9][^/]*)/CLiteRTLM\\.xcframework\\.zip"}
+      ],
+      "notes_in_repo": [
+        {"path": "README.md", "regex": "Do not follow GitHub's \"Latest\" badge", "label": "README: v0.16.1 ships no iOS xcframework"}
+      ]
+    },
+    {
+      "repo": "mmethodz/LiteRtLm.NET",
+      "ecosystem": ".NET",
+      "pins": [
+        {"platform": "Android", "channel": "maven", "path": "LiteRtLm.NET.Android/LiteRtLm.NET.Android.csproj", "after": "litertlm:litertlm-android", "regex": "Version=\"(?P<v>[^\"]+)\""}
+      ]
+    },
+    {
+      "repo": "john-rocky/swift-litert-lm",
+      "ecosystem": "Swift",
+      "own": true,
+      "pins": [
+        {"platform": "iOS", "channel": "xcframework", "path": "Package.swift", "regex": "liteRTLMVersion\\s*=\\s*\"(?P<v>v[^\"]+)\""}
+      ]
+    },
+    {
+      "repo": "john-rocky/litert-lm-kmp",
+      "ecosystem": "Kotlin Multiplatform",
+      "own": true,
+      "pins": [
+        {"platform": "Android", "channel": "maven", "path": "gradle/libs.versions.toml", "regex": "^\\s*litertlm\\s*=\\s*\"(?P<v>[^\"]+)\""},
+        {"platform": "iOS", "channel": "xcframework", "path": "Package.swift", "regex": "releases/download/(?P<v>v[0-9][^/]*)/CLiteRTLM\\.xcframework\\.zip"}
+      ]
+    },
+    {
+      "repo": "john-rocky/hfmodels-android",
+      "ecosystem": "Android",
+      "own": true,
+      "pins": [
+        {"platform": "Android", "channel": "maven", "path": "gradle.properties", "regex": "^litertlmVersion=(?P<v>\\S+)"}
+      ],
+      "notes_in_repo": [
+        {"path": "litertlm/build.gradle.kts", "regex": "0\\.17\\.0 ships Kotlin 2\\.4 metadata", "label": "code comment: 0.17.0 ships Kotlin 2.4 metadata"}
+      ]
+    },
+    {
+      "repo": "john-rocky/litert-ocr",
+      "ecosystem": "Web / Node",
+      "own": true,
+      "package": {"registry": "npm", "name": "litert-ocr"},
+      "pins": [
+        {"platform": "Web", "channel": "npm", "path": "package.json", "after": "\"peerDependencies\"", "regex": "\"@litert-lm/core\":\\s*\"(?P<v>[^\"]+)\""}
+      ],
+      "notes_in_repo": [
+        {"path": "README.md", "regex": "It is a nightly because", "label": "README: why the pin is a nightly"}
+      ]
+    }
+  ]
+}
