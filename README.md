@@ -18,7 +18,7 @@ Each runner also works standalone (`./npm_check.sh`, `python3 gh_assets_check.py
 
 On a new release: update the `GEN_*` pins in `pins.env`, run, and diff the table against the previous generation. A FAIL→PASS flip is a fix confirmed; a PASS→FAIL flip is a release regression; a FAIL with no known-issue mapping is a new finding.
 
-Downstream wrappers: [wrappers/TABLE.md](wrappers/TABLE.md) lists the LiteRT-LM version pinned by each wrapper and app in `wrappers/wrappers.json` (file, line and commit link) and how many stable releases are newer; regenerate it with `python3 wrappers/wrappers_table.py` (Python standard library; reads GitHub through `gh` or `GITHUB_TOKEN`).
+Downstream wrappers: [wrappers/TABLE.md](wrappers/TABLE.md) lists the LiteRT-LM version pinned by each wrapper and app in `wrappers/wrappers.json` (file, line and commit link) and how many stable releases are newer; regenerate it with `python3 wrappers/wrappers_table.py` (Python standard library; reads GitHub through `gh` or `GITHUB_TOKEN`). Steps and host requirements: [wrappers/README.md](wrappers/README.md).
 
 ## What each channel checks
 
