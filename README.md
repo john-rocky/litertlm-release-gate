@@ -1,53 +1,47 @@
 # litertlm-release-gate
 
-Per-channel install-and-run checks over a [LiteRT-LM](https://github.com/google-ai-edge/LiteRT-LM) release: for npm, Maven (Android), the GitHub release assets, SwiftPM (macOS), and the README quickstart, each runner answers one question — **does what a user gets today actually install and generate?** Content checks, not existence checks: tarballs are unpacked, zips are diffed against their declared checksums, models really decode.
+Scripts that install each [LiteRT-LM](https://github.com/google-ai-edge/LiteRT-LM) release the way a user would and try to generate text with it. LiteRT-LM is Google's framework for running LLMs on edge devices. The scripts cover npm, Maven for Android, the GitHub release assets, SwiftPM for macOS and the README's quickstart, so if you build on LiteRT-LM you can see whether a release worked through the route you install from.
 
-I ship [conversions on top of LiteRT-LM](https://huggingface.co/litert-community); this gate exists because litert-lm 0.15.0 silently invalidated bundles I had already shipped, and I found out from a user rather than from a check. It now runs on every release. First full pass (v0.16.1 generation): [results/v0.16.1-generation.md](results/v0.16.1-generation.md) — 35 checks, every FAIL mapped to a filed issue. Second pass (0.17.0 generation, 2026-09-06): [results/v0.17.0-generation.md](results/v0.17.0-generation.md) — PyPI/Maven/npm at 0.17.0 while the GitHub tag stayed v0.16.1; npm `@litert-lm/core` back to a full package (#3364 FAIL→PASS), the #3334 end-of-turn crash gone on a Pixel 8a with the 0.17.0 AAR (FAIL→PASS), the AAR now needs a Kotlin 2.3 consumer (first recorded as 2.4, corrected 2026-09-25 after measuring 2.3 on both sides of the boundary), no regressions. Tag-day pass (v0.17.0 tag, 2026-09-09), same file, top section: the tag ships two xcframework zips only, and the Swift package at `exact: "0.17.0"` does not build because `Package.swift` still pins the v0.16.0 xcframeworks (37 missing C symbols, #3296) — moving the two pins to the tag's own zips builds and generates; everything else unchanged.
+<p align="center">
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/john-rocky/litertlm-release-gate/main/docs/images/checks-dark.svg">
+  <img alt="Stacked bars of the checks for each install route by verdict, for LiteRT-LM 0.17.0 on the day of its GitHub tag. npm: 4 PASS, 1 SKIP. Maven (Android AAR): 3 PASS. GitHub release assets: 11 PASS, 6 FAIL. SwiftPM (macOS): 2 PASS, 1 FAIL, 1 SKIP. docs quickstart: 3 PASS, 2 FAIL, 1 SKIP. PyPI: 21 PASS." src="docs/images/checks-light.svg" width="860">
+</picture>
+</p>
 
-**Did a channel fail for you?** [Open a channel report](https://github.com/john-rocky/litertlm-release-gate/issues/new?template=channel-report.yml) with the command and the output. The row is re-run and a confirmed failure is filed upstream, with the issue number linked back.
+I ship [conversions on top of LiteRT-LM](https://huggingface.co/litert-community). litert-lm 0.15.0 silently invalidated bundles I had already shipped, and I found out from a user rather than from a check. I wrote these checks after that.
+
+The newest results are for 0.17.0, from 2026-09-09, in [results/v0.17.0-generation.md](results/v0.17.0-generation.md). Later releases have not been run yet. Each FAIL links the issue filed for it, and a SKIP means the check could not run. The 21 PyPI checks load published models through `pip install litert-lm==0.17.0`, in a separate run from 2026-09-06. Earlier runs are in [docs/history.md](docs/history.md).
+
+**Did an install fail for you?** [Open a report](https://github.com/john-rocky/litertlm-release-gate/issues/new?template=channel-report.yml) with the command and the output. I re-run that check, and if it fails again I file it upstream and link the issue from the results.
 
 ## Run it
 
 ```bash
 ./run_channels.sh                 # all channels + summary table
-./run_channels.sh --no-device     # skip the Android phone leg
+./run_channels.sh --no-device     # skip the check on an Android phone
 ./run_channels.sh --only npm,swiftpm
 ```
 
-Each runner also works standalone (`./npm_check.sh`, `python3 gh_assets_check.py`, …). Results land in `results_<date>/` as one JSON per channel; `make_table.py` merges them into a markdown PASS/FAIL table under `results/`.
+Each script also runs on its own, such as `./npm_check.sh` or `python3 gh_assets_check.py`. Results land in `results_<date>/` as one JSON per channel, and `make_table.py` merges them into a PASS/FAIL table under `results/`. For a new release, set the `GEN_*` versions in `pins.env`, run `./run_channels.sh`, and compare the table with the last one.
 
-On a new release: update the `GEN_*` pins in `pins.env`, run, and diff the table against the previous generation. A FAIL→PASS flip is a fix confirmed; a PASS→FAIL flip is a release regression; a FAIL with no known-issue mapping is a new finding.
+You need a Mac with `python3`, `npm`, Google Chrome, `uv` and Xcode. The Android check also needs JDK 17, the Android SDK and one `adb` device, and it is skipped when there is none.
 
-Downstream wrappers: [wrappers/TABLE.md](wrappers/TABLE.md) lists the LiteRT-LM version pinned by each wrapper and app in `wrappers/wrappers.json` (file, line and commit link) and how many stable releases are newer; regenerate it with `python3 wrappers/wrappers_table.py` (Python standard library; reads GitHub through `gh` or `GITHUB_TOKEN`). Steps and host requirements: [wrappers/README.md](wrappers/README.md).
+## What each script checks
 
-## What each channel checks
+- `npm_check.sh`: what the npm packages contain, and one real inference in headless Chrome.
+- `maven_check.sh`: the Android library resolves, an app builds against it, and a phone generates text with it.
+- `gh_assets_check.py`: the release files match their declared checksums and hold what they should.
+- `swiftpm_check.sh`: the Swift package builds at the release tag and generates on a small model.
+- `quickstart_check.sh`: the README's own commands, run as written, which also install from PyPI.
 
-| Runner | Checks |
-|---|---|
-| `npm_check.sh` | `npm pack` of `@litert-lm/core` and `@litertjs/core`: tarball contents vs each package's own `files` globs, version lag vs the release tag, then a **headless-Chrome smoke that runs a real .tflite inference** from the packed litert.js artifact (wasm accelerator). |
-| `maven_check.sh` | `litertlm-android` resolves from `google()` Maven, an app + instrumented test build against it, then **init + one text generate on a real device** — the end-of-turn path where the runtime's stream channel closes. |
-| `gh_assets_check.py` | Release-asset content: SwiftPM `Package.swift` binary URLs resolve and **sha256 matches the declared checksum**, capabilities C API presence in the xcframework and C-API zips, NOTICE/SBOM presence, vendor dirs inside the LiteRT NPU runtime zips, no zero-byte members. |
-| `swiftpm_check.sh` | `swift package resolve` of the official package at the pinned tag (semver `exact`), checkout, `swift build`, then one generate through the Swift `Engine` API on a small canary model. |
-| `scoring_rewind_check.py` | Text scoring after one prefill on the wheel's C API (ctypes over `liblitert-lm.dylib`, Mac CPU): `run_prefill` → `save_checkpoint` → per candidate `run_text_scoring` + `rewind_to_checkpoint`, **each score asserted against a fresh session with a fresh prefill**, then the first candidate scored again. Rows `scoring.first` / `scoring.rewind` / `scoring.repeat`; on 0.17.x the last two FAIL with google-ai-edge/LiteRT-LM#3561 (fix proposed in #3562), so the canary is the day-0 check of that fix. |
-| `quickstart_check.sh` | The README's own commands, run **verbatim** (drift-checked against the tag first): `uv tool install litert-lm`, the Quick Try block, the header gemma-4 command — plus the same flow with a small ungated model to separate pipe health from broken/gated documented commands. |
+More detail is in [docs/channels.md](docs/channels.md).
 
-PyPI is exercised along the way: `uv tool install litert-lm` resolves from PyPI, and the swapped-model quickstart leg takes that CLI through download and generation.
+## More
 
-Verdicts: `PASS` / `FAIL` / `SKIP` (blocked, e.g. by model gating — a SKIP is "not measured", never a pass). Every FAIL in a results table carries the upstream issue it maps to; a FAIL with no issue number is a candidate new finding.
-
-## Requirements
-
-macOS host (Apple silicon tested) with: `python3` (stdlib only), `npm`, Google Chrome, `uv`, Xcode (SwiftPM row), JDK 17 + Android SDK + one `adb` device (Maven device leg; skipped cleanly when absent), `gh` (optional, raises GitHub API limits). Models and versions are pinned in `pins.env`; the LLM canary is the smallest official litert-community ship (`gemma-3-270m-it` q8) so the model is never the variable.
-
-## Notes that save time
-
-- **litert.js is published for bundlers**: `dist/index.js` imports the bare specifier `@litertjs/wasm-utils`, so the no-bundler smoke serves it via an import map (`npm_smoke/smoke.html`).
-- **Headless Chrome can linger after `--dump-dom`**; the runner polls for the page's `RESULT:` marker and kills it. `performance.now()` under `--virtual-time-budget` is virtual, so the smoke's `infer_ms` is meaningless — only the finite-output verdict counts.
-- **litertlm-android 0.16.1 ships Kotlin metadata 2.3.0**: consumers on Kotlin ≤ 2.1 fail to compile against it ("can read up to 2.2.0"), so the harness app pins Kotlin 2.2.10.
-- **SwiftPM checkout of LiteRT-LM dies on git-lfs** (`prebuilt/.../libGemmaModelConstraintProvider.so`): SwiftPM checks out from its local bare mirror, which has no LFS endpoint — the object itself is fine on GitHub's LFS. The runner records the FAIL, then continues under `GIT_LFS_SKIP_SMUDGE=1` so build and generate still get measured. First `swift package resolve` also mirrors the full repo history (~3.2 GB / ~14 min measured).
-- **The litert-lm CLI reads HF auth only from `--huggingface-token` / `HF_TOKEN`**; gated repos (even auto-approved ones) 401 without it. Gating failures are recorded as SKIP, not channel FAILs.
-- Non-interactive `litert-lm run` always gets `</dev/null` — it blocks forever on an inherited tty otherwise.
+- [Workarounds the scripts use](docs/notes.md)
+- [wrappers/TABLE.md](wrappers/TABLE.md): the LiteRT-LM version each wrapper and app uses
 
 ## License
 
-Apache-2.0. Issue numbers referenced in runners and results point at [google-ai-edge/LiteRT-LM](https://github.com/google-ai-edge/LiteRT-LM/issues) and [google-ai-edge/LiteRT](https://github.com/google-ai-edge/LiteRT/issues).
+Apache-2.0. Issue numbers in the scripts and results point at [google-ai-edge/LiteRT-LM](https://github.com/google-ai-edge/LiteRT-LM/issues) and [google-ai-edge/LiteRT](https://github.com/google-ai-edge/LiteRT/issues).
