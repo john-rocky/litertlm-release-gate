@@ -1,6 +1,6 @@
 {
  "generated_by": "wrappers/wrappers_table.py",
- "read_date": "2026-11-10",
+ "read_date": "2026-11-11",
  "upstream": {
   "github": {
    "repo": "google-ai-edge/LiteRT-LM",
@@ -164,7 +164,7 @@
    "notes_in_repo": [],
    "note": null,
    "links": [],
-   "read_date": "2026-11-10",
+   "read_date": "2026-11-11",
    "errors": []
   },
   {
@@ -203,7 +203,7 @@
     "registry": "nuget",
     "name": "LiteRtLmSharp",
     "count": null,
-    "total": 2014,
+    "total": 2023,
     "period": "no monthly count"
    },
    "bump_items": [
@@ -219,7 +219,7 @@
    "notes_in_repo": [],
    "note": null,
    "links": [],
-   "read_date": "2026-11-10",
+   "read_date": "2026-11-11",
    "errors": []
   },
   {
@@ -232,8 +232,8 @@
    "own": true,
    "archived": false,
    "ref": "main",
-   "sha": "a582f5c381ae4548e03f9b6859c8e57507a7edc6",
-   "last_push": "2026-11-05",
+   "sha": "650e7d94d0f1b45e1d0bb4a219d6d8becbe55088",
+   "last_push": "2026-11-11",
    "pins": [
     {
      "platform": "Android",
@@ -252,7 +252,7 @@
      "how": null,
      "path": "gradle.properties",
      "line": 7,
-     "url": "https://github.com/john-rocky/hfmodels-android/blob/a582f5c381ae4548e03f9b6859c8e57507a7edc6/gradle.properties#L7",
+     "url": "https://github.com/john-rocky/hfmodels-android/blob/650e7d94d0f1b45e1d0bb4a219d6d8becbe55088/gradle.properties#L7",
      "text": null,
      "line_text": "litertlmVersion=0.16.1"
     }
@@ -265,13 +265,13 @@
    "notes_in_repo": [
     {
      "label": "code comment: 0.17.0 ships Kotlin 2.4 metadata",
-     "url": "https://github.com/john-rocky/hfmodels-android/blob/a582f5c381ae4548e03f9b6859c8e57507a7edc6/litertlm/build.gradle.kts#L27",
+     "url": "https://github.com/john-rocky/hfmodels-android/blob/650e7d94d0f1b45e1d0bb4a219d6d8becbe55088/litertlm/build.gradle.kts#L27",
      "line_text": "// litertlm-android 0.17.0 ships Kotlin 2.4 metadata, which the Kotlin built into AGP 9.3.1 refuses."
     }
    ],
    "note": null,
    "links": [],
-   "read_date": "2026-11-10",
+   "read_date": "2026-11-11",
    "errors": []
   },
   {
@@ -326,7 +326,7 @@
    "notes_in_repo": [],
    "note": null,
    "links": [],
-   "read_date": "2026-11-10",
+   "read_date": "2026-11-11",
    "errors": []
   },
   {
@@ -390,7 +390,7 @@
    "notes_in_repo": [],
    "note": null,
    "links": [],
-   "read_date": "2026-11-10",
+   "read_date": "2026-11-11",
    "errors": []
   },
   {
@@ -445,7 +445,7 @@
    "notes_in_repo": [],
    "note": null,
    "links": [],
-   "read_date": "2026-11-10",
+   "read_date": "2026-11-11",
    "errors": []
   },
   {
@@ -498,7 +498,7 @@
    "notes_in_repo": [],
    "note": null,
    "links": [],
-   "read_date": "2026-11-10",
+   "read_date": "2026-11-11",
    "errors": []
   },
   {
@@ -573,14 +573,23 @@
    "downloads": {
     "registry": "npm",
     "name": "@capgo/capacitor-llm",
-    "count": 54604,
-    "period": "2026-10-10..2026-11-08"
+    "count": 54066,
+    "period": "2026-10-11..2026-11-09"
    },
-   "bump_items": [],
+   "bump_items": [
+    {
+     "type": "PR",
+     "number": 37,
+     "url": "https://github.com/Cap-go/capacitor-llm/pull/37",
+     "user": "john-rocky",
+     "created": "2026-11-11",
+     "title": "chore: update LiteRT-LM (Android 0.16.1, iOS 0.19.1)"
+    }
+   ],
    "notes_in_repo": [],
    "note": null,
    "links": [],
-   "read_date": "2026-11-10",
+   "read_date": "2026-11-11",
    "errors": []
   },
   {
@@ -657,8 +666,8 @@
    "downloads": {
     "registry": "npm",
     "name": "expo-litert-lm",
-    "count": 1048,
-    "period": "2026-10-10..2026-11-08"
+    "count": 1054,
+    "period": "2026-10-11..2026-11-09"
    },
    "bump_items": [],
    "notes_in_repo": [],
@@ -669,7 +678,7 @@
      "https://github.com/helenkwok/LiteRTLM-Swift/releases/tag/v0.10.2%2Brewrap.5"
     ]
    ],
-   "read_date": "2026-11-10",
+   "read_date": "2026-11-11",
    "errors": []
   },
   {
@@ -717,14 +726,14 @@
    "downloads": {
     "registry": "npm",
     "name": "expo-ai-kit",
-    "count": 21573,
-    "period": "2026-10-10..2026-11-08"
+    "count": 21978,
+    "period": "2026-10-11..2026-11-09"
    },
    "bump_items": [],
    "notes_in_repo": [],
    "note": null,
    "links": [],
-   "read_date": "2026-11-10",
+   "read_date": "2026-11-11",
    "errors": []
   },
   {
@@ -776,14 +785,14 @@
    "downloads": {
     "registry": "pub",
     "name": "flutter_edge_ai_litertlm",
-    "count": 15971,
+    "count": 16356,
     "period": "30 days"
    },
    "bump_items": [],
    "notes_in_repo": [],
    "note": "Native libraries built in this repo from LiteRT-LM source (release native-v0.19.0-a). Web: the @litert-lm/core import in the example app's web/index.html.",
    "links": [],
-   "read_date": "2026-11-10",
+   "read_date": "2026-11-11",
    "errors": []
   },
   {
@@ -822,14 +831,14 @@
    "downloads": {
     "registry": "pub",
     "name": "flutter_gemma_litertlm",
-    "count": 32722,
+    "count": 31461,
     "period": "30 days"
    },
    "bump_items": [],
    "notes_in_repo": [],
    "note": "pub.dev flutter_gemma 1.11.4 and flutter_gemma_litertlm 1.8.6 are the final releases under these names (\"Moved to flutter_edge_ai\"); native bundle native-v0.17.1-a.",
    "links": [],
-   "read_date": "2026-11-10",
+   "read_date": "2026-11-11",
    "errors": []
   },
   {
@@ -842,8 +851,8 @@
    "own": false,
    "archived": false,
    "ref": "main",
-   "sha": "77b01da1f6db7cde751b618700574b63f3eb74a9",
-   "last_push": "2026-11-10",
+   "sha": "edaf8b5629ab5035397b54e8fbd0f44cdf65d42b",
+   "last_push": "2026-11-11",
    "pins": [
     {
      "platform": "native",
@@ -855,9 +864,9 @@
      "how": null,
      "path": "lib/src/backends/litert_lm/litert_lm_runtime.dart",
      "line": 36,
-     "url": "https://github.com/leehack/llamadart/blob/77b01da1f6db7cde751b618700574b63f3eb74a9/lib/src/backends/litert_lm/litert_lm_runtime.dart#L36",
+     "url": "https://github.com/leehack/llamadart/blob/edaf8b5629ab5035397b54e8fbd0f44cdf65d42b/lib/src/backends/litert_lm/litert_lm_runtime.dart#L36",
      "text": null,
-     "line_text": "const _litertLmReleaseTag = 'v0.19.1-2';"
+     "line_text": "const _litertLmReleaseTag = 'v0.19.1-3';"
     },
     {
      "platform": "Web",
@@ -869,7 +878,7 @@
      "how": null,
      "path": "example/chat_app/web/index.html",
      "line": 185,
-     "url": "https://github.com/leehack/llamadart/blob/77b01da1f6db7cde751b618700574b63f3eb74a9/example/chat_app/web/index.html#L185",
+     "url": "https://github.com/leehack/llamadart/blob/edaf8b5629ab5035397b54e8fbd0f44cdf65d42b/example/chat_app/web/index.html#L185",
      "text": null,
      "line_text": ": 'https://cdn.jsdelivr.net/npm/@litert-lm/core@0.19.0/+esm';"
     }
@@ -877,14 +886,14 @@
    "downloads": {
     "registry": "pub",
     "name": "llamadart",
-    "count": 65351,
+    "count": 70626,
     "period": "30 days"
    },
    "bump_items": [],
    "notes_in_repo": [],
    "note": "Runtime from leehack/litert-lm-native release v0.19.1-2. Web: the default @litert-lm/core module URL in the example chat app's web/index.html; apps set their own URL or preload the package.",
    "links": [],
-   "read_date": "2026-11-10",
+   "read_date": "2026-11-11",
    "errors": []
   },
   {
@@ -931,7 +940,7 @@
    "notes_in_repo": [],
    "note": "v0.16.0 is the release FetchLib downloads when the caller passes no version; callers can pass another. README: \"Minimum supported upstream C-API runtime: LiteRT-LM v0.16.0.\"",
    "links": [],
-   "read_date": "2026-11-10",
+   "read_date": "2026-11-11",
    "errors": []
   },
   {
@@ -980,11 +989,20 @@
     "registry": null,
     "count": null
    },
-   "bump_items": [],
+   "bump_items": [
+    {
+     "type": "PR",
+     "number": 2334,
+     "url": "https://github.com/JetBrains/koog/pull/2334",
+     "user": "john-rocky",
+     "created": "2026-11-11",
+     "title": "build(prompt)!: upgrade litertlm-android to 0.19.1"
+    }
+   ],
    "notes_in_repo": [],
    "note": null,
    "links": [],
-   "read_date": "2026-11-10",
+   "read_date": "2026-11-11",
    "errors": []
   },
   {
@@ -997,40 +1015,36 @@
    "own": true,
    "archived": false,
    "ref": "main",
-   "sha": "4e736c5302d96ba50cb9a5011b80031e5225ad1f",
-   "last_push": "2026-11-05",
+   "sha": "0215c7c240ab967ffe044907376d1d6d7a5a42f9",
+   "last_push": "2026-11-11",
    "pins": [
     {
      "platform": "Android",
      "channel": "maven",
-     "version": "0.19.0",
+     "version": "0.19.1",
      "latest": "0.19.1",
-     "newer": 1,
-     "newer_versions": [
-      "0.19.1"
-     ],
+     "newer": 0,
+     "newer_versions": [],
      "how": null,
      "path": "gradle/libs.versions.toml",
      "line": 13,
-     "url": "https://github.com/john-rocky/litert-lm-kmp/blob/4e736c5302d96ba50cb9a5011b80031e5225ad1f/gradle/libs.versions.toml#L13",
+     "url": "https://github.com/john-rocky/litert-lm-kmp/blob/0215c7c240ab967ffe044907376d1d6d7a5a42f9/gradle/libs.versions.toml#L13",
      "text": null,
-     "line_text": "litertlm = \"0.19.0\""
+     "line_text": "litertlm = \"0.19.1\""
     },
     {
      "platform": "iOS",
      "channel": "xcframework",
-     "version": "v0.19.0",
+     "version": "v0.19.1",
      "latest": "v0.19.1",
-     "newer": 1,
-     "newer_versions": [
-      "v0.19.1"
-     ],
+     "newer": 0,
+     "newer_versions": [],
      "how": null,
      "path": "Package.swift",
      "line": 17,
-     "url": "https://github.com/john-rocky/litert-lm-kmp/blob/4e736c5302d96ba50cb9a5011b80031e5225ad1f/Package.swift#L17",
+     "url": "https://github.com/john-rocky/litert-lm-kmp/blob/0215c7c240ab967ffe044907376d1d6d7a5a42f9/Package.swift#L17",
      "text": null,
-     "line_text": "url: \"https://github.com/google-ai-edge/LiteRT-LM/releases/download/v0.19.0/CLiteRTLM.xcframework.zip\","
+     "line_text": "url: \"https://github.com/google-ai-edge/LiteRT-LM/releases/download/v0.19.1/CLiteRTLM.xcframework.zip\","
     }
    ],
    "downloads": {
@@ -1041,7 +1055,7 @@
    "notes_in_repo": [],
    "note": null,
    "links": [],
-   "read_date": "2026-11-10",
+   "read_date": "2026-11-11",
    "errors": []
   },
   {
@@ -1094,7 +1108,7 @@
    "notes_in_repo": [],
    "note": null,
    "links": [],
-   "read_date": "2026-11-10",
+   "read_date": "2026-11-11",
    "errors": []
   },
   {
@@ -1144,14 +1158,14 @@
    "downloads": {
     "registry": "npm",
     "name": "react-native-ai-core",
-    "count": 2454,
-    "period": "2026-10-10..2026-11-08"
+    "count": 2410,
+    "period": "2026-10-11..2026-11-09"
    },
    "bump_items": [],
    "notes_in_repo": [],
    "note": null,
    "links": [],
-   "read_date": "2026-11-10",
+   "read_date": "2026-11-11",
    "errors": []
   },
   {
@@ -1164,8 +1178,8 @@
    "own": false,
    "archived": false,
    "ref": "main",
-   "sha": "1eea59a944462295d4c7c765b9431a4b47444101",
-   "last_push": "2026-11-08",
+   "sha": "a44dfaa48c92fbc6f6b1a915633f42b42c29cf10",
+   "last_push": "2026-11-11",
    "pins": [
     {
      "platform": "Android",
@@ -1180,7 +1194,7 @@
      "how": null,
      "path": "package.json",
      "line": 6,
-     "url": "https://github.com/hung-yueh/react-native-litert-lm/blob/1eea59a944462295d4c7c765b9431a4b47444101/package.json#L6",
+     "url": "https://github.com/hung-yueh/react-native-litert-lm/blob/a44dfaa48c92fbc6f6b1a915633f42b42c29cf10/package.json#L6",
      "text": null,
      "line_text": "\"androidMavenVersion\": \"0.18.1\","
     },
@@ -1197,7 +1211,7 @@
      "how": null,
      "path": "package.json",
      "line": 7,
-     "url": "https://github.com/hung-yueh/react-native-litert-lm/blob/1eea59a944462295d4c7c765b9431a4b47444101/package.json#L7",
+     "url": "https://github.com/hung-yueh/react-native-litert-lm/blob/a44dfaa48c92fbc6f6b1a915633f42b42c29cf10/package.json#L7",
      "text": null,
      "line_text": "\"iosGitTag\": \"v0.18.1\""
     }
@@ -1205,8 +1219,8 @@
    "downloads": {
     "registry": "npm",
     "name": "react-native-litert-lm",
-    "count": 3608,
-    "period": "2026-10-10..2026-11-08"
+    "count": 3582,
+    "period": "2026-10-11..2026-11-09"
    },
    "bump_items": [
     {
@@ -1221,7 +1235,7 @@
    "notes_in_repo": [],
    "note": null,
    "links": [],
-   "read_date": "2026-11-10",
+   "read_date": "2026-11-11",
    "errors": []
   },
   {
@@ -1255,7 +1269,7 @@
     "registry": "crates",
     "name": "litert-lm-rs",
     "count": 1,
-    "period": "2026-10-11..2026-11-09"
+    "period": "2026-10-12..2026-11-10"
    },
    "bump_items": [],
    "notes_in_repo": [],
@@ -1266,7 +1280,7 @@
      "https://github.com/google-ai-edge/LiteRT-LM/blob/5be8b14428/c/engine.h"
     ]
    ],
-   "read_date": "2026-11-10",
+   "read_date": "2026-11-11",
    "errors": []
   },
   {
@@ -1316,13 +1330,13 @@
     "registry": "crates",
     "name": "litertlm",
     "count": 17,
-    "period": "2026-10-11..2026-11-09"
+    "period": "2026-10-12..2026-11-10"
    },
    "bump_items": [],
    "notes_in_repo": [],
    "note": "Prebuilt libraries from the offbit-ai/LiteRT release litert-lm-v0.10.2 (MIRROR_BASE in the same file).",
    "links": [],
-   "read_date": "2026-11-10",
+   "read_date": "2026-11-11",
    "errors": []
   },
   {
@@ -1374,7 +1388,7 @@
    ],
    "note": null,
    "links": [],
-   "read_date": "2026-11-10",
+   "read_date": "2026-11-11",
    "errors": []
   },
   {
@@ -1387,24 +1401,22 @@
    "own": true,
    "archived": false,
    "ref": "main",
-   "sha": "dd0507714e160be441803df53238f4ac1e3d17fc",
-   "last_push": "2026-11-07",
+   "sha": "c7e59d12b81b52e15d4b9d4796de2e5850087fd1",
+   "last_push": "2026-11-11",
    "pins": [
     {
      "platform": "iOS",
      "channel": "xcframework",
-     "version": "v0.19.0",
+     "version": "v0.19.1",
      "latest": "v0.19.1",
-     "newer": 1,
-     "newer_versions": [
-      "v0.19.1"
-     ],
+     "newer": 0,
+     "newer_versions": [],
      "how": null,
      "path": "Package.swift",
      "line": 22,
-     "url": "https://github.com/john-rocky/swift-litert-lm/blob/dd0507714e160be441803df53238f4ac1e3d17fc/Package.swift#L22",
+     "url": "https://github.com/john-rocky/swift-litert-lm/blob/c7e59d12b81b52e15d4b9d4796de2e5850087fd1/Package.swift#L22",
      "text": null,
-     "line_text": "let liteRTLMVersion = \"v0.19.0\""
+     "line_text": "let liteRTLMVersion = \"v0.19.1\""
     }
    ],
    "downloads": {
@@ -1415,7 +1427,7 @@
    "notes_in_repo": [],
    "note": null,
    "links": [],
-   "read_date": "2026-11-10",
+   "read_date": "2026-11-11",
    "errors": []
   },
   {
@@ -1459,7 +1471,7 @@
      "https://github.com/google-ai-edge/LiteRT-LM/blob/v0.10.2/c/engine.h"
     ]
    ],
-   "read_date": "2026-11-10",
+   "read_date": "2026-11-11",
    "errors": []
   },
   {
@@ -1503,7 +1515,7 @@
      "https://github.com/google-ai-edge/LiteRT-LM/blob/v0.10.2/c/engine.h"
     ]
    ],
-   "read_date": "2026-11-10",
+   "read_date": "2026-11-11",
    "errors": []
   },
   {
@@ -1560,7 +1572,7 @@
    ],
    "note": "Submodule at 80f301f, the parent of the commit tagged v0.14.0 upstream (the tag commit changes two checksum lines in Package.swift); version.bzl there reads 0.14.0.",
    "links": [],
-   "read_date": "2026-11-10",
+   "read_date": "2026-11-11",
    "errors": []
   },
   {
@@ -1601,14 +1613,14 @@
     "registry": "nuget",
     "name": "Uralstech.UAI.LiteRTLM",
     "count": null,
-    "total": 1277,
+    "total": 1279,
     "period": "no monthly count"
    },
    "bump_items": [],
    "notes_in_repo": [],
    "note": "Native libraries built from the submodule (Native/build.sh).",
    "links": [],
-   "read_date": "2026-11-10",
+   "read_date": "2026-11-11",
    "errors": []
   },
   {
@@ -1656,7 +1668,7 @@
      "https://github.com/winyunq/LiteRT-LM/releases/tag/unreal-win64-v0.14.0-abi1.2"
     ]
    ],
-   "read_date": "2026-11-10",
+   "read_date": "2026-11-11",
    "errors": []
   },
   {
@@ -1669,7 +1681,7 @@
    "own": true,
    "archived": false,
    "ref": "main",
-   "sha": "31ce3883f47598214e105d866f5de232afe07d66",
+   "sha": "46adf0d55e1c1b581639108ea05b92fe7346677b",
    "last_push": "2026-11-10",
    "pins": [
     {
@@ -1683,8 +1695,8 @@
      ],
      "how": null,
      "path": "package.json",
-     "line": 85,
-     "url": "https://github.com/john-rocky/litert-ocr/blob/31ce3883f47598214e105d866f5de232afe07d66/package.json#L85",
+     "line": 86,
+     "url": "https://github.com/john-rocky/litert-ocr/blob/46adf0d55e1c1b581639108ea05b92fe7346677b/package.json#L86",
      "text": null,
      "line_text": "\"@litert-lm/core\": \"0.19.0-nightly.20261018\""
     }
@@ -1692,20 +1704,14 @@
    "downloads": {
     "registry": "npm",
     "name": "litert-ocr",
-    "count": 605,
-    "period": "2026-10-10..2026-11-08"
+    "count": 616,
+    "period": "2026-10-11..2026-11-09"
    },
    "bump_items": [],
-   "notes_in_repo": [
-    {
-     "label": "README: why the pin is a nightly",
-     "url": "https://github.com/john-rocky/litert-ocr/blob/31ce3883f47598214e105d866f5de232afe07d66/README.md#L126",
-     "line_text": "- Needs the optional peer dependency `@litert-lm/core@0.19.0-nightly.20261018`: `npm install @litert-lm/core@0.19.0-nightly.20261018`, or pass `{ llm: { module } }`. It is a nightly because the current stable release, 0.18.1, cannot create an engine ([LiteRT-LM issue #4051](https://github.com/google-ai-edge/LiteRT-LM/issues/4051)); this moves to the stable release that fixes it."
-    }
-   ],
+   "notes_in_repo": [],
    "note": null,
    "links": [],
-   "read_date": "2026-11-10",
+   "read_date": "2026-11-11",
    "errors": []
   }
  ]

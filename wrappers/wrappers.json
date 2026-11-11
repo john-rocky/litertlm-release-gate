@@ -266,9 +266,6 @@
       "package": {"registry": "npm", "name": "litert-ocr"},
       "pins": [
         {"platform": "Web", "channel": "npm", "path": "package.json", "after": "\"peerDependencies\"", "regex": "\"@litert-lm/core\":\\s*\"(?P<v>[^\"]+)\""}
-      ],
-      "notes_in_repo": [
-        {"path": "README.md", "regex": "It is a nightly because", "label": "README: why the pin is a nightly"}
       ]
     }
   ]
