@@ -6,8 +6,7 @@
 
 Writes reports/release_artifact_gate_<date>.md and copies the row JSONs into
 reports/release_artifact_gate_<date>_data/ so the table's evidence survives the
-gitignored results_*/ dir. A FAIL row without an `issue` is surfaced loudly as a
-candidate NEW finding — those stay drafts until the user says GO.
+gitignored results_*/ dir. A FAIL row without an `issue` is marked as new.
 
 If qa/out/compat_<GEN>.json exists (the standing PyPI-channel gate), a PyPI row
 is synthesized from it rather than re-measured here.
@@ -57,10 +56,10 @@ def main():
     os.makedirs(os.path.dirname(report), exist_ok=True)
     total = fails = news = 0
     lines = []
-    lines.append(f"# リリース成果物ゲート 第{args.round}回 — {gen} 世代 ({time.strftime('%Y-%m-%d')})\n")
-    lines.append("公開された配布物がチャネルごとに「実際にインストールできて動くか」の実測表。ハーネスは `./`(各行 re-run 可能、ピンは `pins.env`)。性能ベンチとは別軸 = 配布物の完全性。\n")
-    lines.append(f"世代ピン: LiteRT-LM `{gen}` / LiteRT `{pins['GEN_LITERT_TAG']}` / PyPI `{pins['GEN_PYPI_LITERT_LM']}` / Maven `{pins['GEN_MAVEN_LITERTLM_ANDROID']}` / npm `@litert-lm/core {pins['GEN_NPM_LITERTLM_CORE']}` `@litertjs/core {pins['GEN_NPM_LITERTJS_CORE']}`。LLM canary: `{pins['CANARY_LLM_REPO']}/{pins['CANARY_LLM_FILE']}`。\n")
-    lines.append("| チャネル | 検査 | 結果 | 実測 | 該当 issue |")
+    lines.append(f"# {gen} generation — pass {args.round} (measured {time.strftime('%Y-%m-%d')})\n")
+    lines.append("Whether each published artifact installs and runs, channel by channel. Every row can be run again from this repo, with the versions in `pins.env`. This table is about whether the artifacts are complete, not how fast they run.\n")
+    lines.append(f"Pins: LiteRT-LM `{gen}` / LiteRT `{pins['GEN_LITERT_TAG']}` / PyPI `{pins['GEN_PYPI_LITERT_LM']}` / Maven `{pins['GEN_MAVEN_LITERTLM_ANDROID']}` / npm `@litert-lm/core {pins['GEN_NPM_LITERTLM_CORE']}`, `@litertjs/core {pins['GEN_NPM_LITERTJS_CORE']}`. LLM canary: `{pins['CANARY_LLM_REPO']}/{pins['CANARY_LLM_FILE']}`.\n")
+    lines.append("| Channel | Check | Result | Measured | Known issue |")
     lines.append("|---|---|---|---|---|")
     for ch in ORDER:
         if ch not in rows:
@@ -73,22 +72,28 @@ def main():
                 if not c["issue"]:
                     news += 1
             mark = {"PASS": "✅ PASS", "FAIL": "❌ FAIL", "SKIP": "⏭ SKIP"}[st]
-            issue = c["issue"] or ("**新規 — 草案のみ**" if st == "FAIL" else "—")
+            issue = c["issue"] or ("**new**" if st == "FAIL" else "—")
             meas = c["measured"].replace("|", "\\|").replace("\n", " ")[:170]
             lines.append(f"| {LABEL[ch]} | `{c['id']}` | {mark} | {meas} | {issue} |")
     lines.append("")
-    lines.append(f"**{total} 検査 / {fails} FAIL(うち既知 issue 対応 {fails - news}・新規候補 {news})**\n")
+    if news:
+        summary = f" — {fails - news} of {fails} map to a filed issue, {news} new."
+    elif fails:
+        summary = " — every FAIL maps to a filed issue, 0 new."
+    else:
+        summary = ""
+    lines.append(f"**{total} checks / {fails} FAIL**{summary}\n")
 
-    lines.append("## FAIL の note\n")
+    lines.append("## FAIL notes\n")
     for ch in ORDER:
         if ch not in rows:
             continue
         for c in rows[ch]["checks"]:
             if c["status"] != "FAIL":
                 continue
-            lines.append(f"- `{c['id']}` — {c['desc']}。実測: {c['measured']}。"
-                         + (f"既知: {c['issue']}。" if c["issue"] else "**既知 issue なし → 草案止まり(投稿は user GO)**。")
-                         + (f" 一次ログ: `{c['evidence']}`" if c.get("evidence") else ""))
+            lines.append(f"- `{c['id']}` — {c['desc']}. Measured: {c['measured']}."
+                         + (f" Known issue: {c['issue']}." if c["issue"] else " **New: no filed issue.**")
+                         + (f" Log: `{c['evidence']}`" if c.get("evidence") else ""))
     lines.append("")
 
     notes = os.path.join(rdir, "NOTES.md")
@@ -107,12 +112,12 @@ def main():
         for pat in ("DRAFT_*.md", "NOTES.md", "*_evidence.log"):
             for src in glob.glob(os.path.join(rdir, pat)):
                 shutil.copy2(src, data_dir)
-        lines.append(f"行 JSON(検査の生データ): `{os.path.relpath(data_dir, REPO)}/`。"
-                     f"一次ログは `./cache/` と results dir(gitignore、ローカル保持)。\n")
+        lines.append(f"Raw data for each check: `{os.path.relpath(data_dir, REPO)}/`. "
+                     f"The logs stay local, in `./cache/` and the results directory (both gitignored).\n")
 
     with open(report, "w") as f:
         f.write("\n".join(lines))
-    print(f"table: {report}  ({total} checks, {fails} FAIL, {news} new-candidate)")
+    print(f"table: {report}  ({total} checks, {fails} FAIL, {news} new)")
     return 0
 
 
