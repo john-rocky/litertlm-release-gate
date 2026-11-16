@@ -38,5 +38,5 @@ has scoring    && { echo "===== scoring";    python3 "$HERE/scoring_rewind_check
 echo "===== table"
 python3 "$HERE/make_table.py" --results "$OUTDIR" || RC=1
 echo
-echo "FAILs with no issue number are DRAFT-ONLY findings — posting needs user GO."
+echo "FAILs with no issue number are DRAFT-ONLY findings — posting is a separate step."
 exit $RC
